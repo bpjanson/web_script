@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         正确率查询-表格
+// @name         4-正确率查询-表格
 // @namespace    http://tampermonkey.net/
 // @version      3.0
 // @description  在题目列表中显示正确率,现已支持在线更新
