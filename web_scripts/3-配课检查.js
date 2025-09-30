@@ -6,7 +6,7 @@
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*
 // @grant        none
-// @icon         https://codemao.cn/favicon.ico
+// @icon         https://tyca.codemao.cn/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/3-%E9%85%8D%E8%AF%BE%E6%A3%80%E6%9F%A5.js
 // @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/3-%E9%85%8D%E8%AF%BE%E6%A3%80%E6%9F%A5.js
 // ==/UserScript==
