@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         4-周测正确率查询-按钮
+// @name         4-正确率查询-按钮
 // @namespace    http://tampermonkey.net/
 // @version      3.0
 // @description  在周测页面添加一个美化按钮，点击后在悬浮窗中显示所有题目、整体正确率（整数）并优化复制功能。现已支持在线更新
