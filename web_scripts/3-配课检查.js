@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         3-配课检查
+// @name         3-课程配置检查
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  自动检查课程配置是否符合规范，修复了讲义链接格式检查规则
