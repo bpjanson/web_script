@@ -8,7 +8,7 @@
 // @grant        none
 // @icon         https://tyca.codemao.cn/favicon.ico
 // @license      MPL-2.0
-// // ==/UserScript==
+// ==/UserScript==
 
 (function () {
     'use strict';
