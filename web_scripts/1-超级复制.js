@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         1-超级复制(慎用)
+// @name         1-超级复制
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @description  支持超级复制 和 同步修改课程名称
