@@ -1,13 +1,15 @@
 // ==UserScript==
 // @name         正确率查询-表格
 // @namespace    http://tampermonkey.net/
-// @version      0.6
-// @description  在指定页面的题目列表中显示每道题目的正确率（整数百分比）
+// @version      2.4
+// @description  在题目列表中显示正确率,现已支持在线更新
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/*
 // @grant        GM_xmlhttpRequest
 // @run-at       document-idle
 // @icon         https://tyca.codemao.cn/favicon.ico
+// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
+// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
 // ==/UserScript==
 
 (function () {
