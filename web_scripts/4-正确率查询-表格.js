@@ -8,8 +8,8 @@
 // @grant        GM_xmlhttpRequest
 // @run-at       document-idle
 // @icon         https://tyca.codemao.cn/favicon.ico
-// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
-// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
+// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/4-%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
+// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/4-%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E8%A1%A8%E6%A0%BC.js
 // @license      MIT; https://github.com/bpjanson/Vibe_Coding/LICENSE
 // ==/UserScript==
 
