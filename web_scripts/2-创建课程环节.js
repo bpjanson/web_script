@@ -1,16 +1,125 @@
 // ==UserScript==
 // @name         2-快速创建课程环节
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      3.0
 // @description  在课程配置页面添加快速配置按钮
 // @author       You
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*&isEdit=true
 // @grant        none
 // @icon         https://codemao.cn/favicon.ico
+// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/2-%E5%88%9B%E5%BB%BA%E8%AF%BE%E7%A8%8B%E7%8E%AF%E8%8A%82.js
+// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/2-%E5%88%9B%E5%BB%BA%E8%AF%BE%E7%A8%8B%E7%8E%AF%E8%8A%82.js
 // ==/UserScript==
 
 (function () {
     'use strict';
+    
+    // 检查更新功能
+    function checkForUpdates() {
+        // 获取当前脚本版本
+        const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ? 
+                              GM_info.script.version : '3.0'; // 默认版本
+        
+        // GitHub raw URL
+        const githubRawUrl = 'https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/2-%E5%88%9B%E5%BB%BA%E8%AF%BE%E7%A8%8B%E7%8E%AF%E8%8A%82.js';
+        
+        // 使用fetch检查更新
+        fetch(githubRawUrl)
+            .then(response => response.text())
+            .then(data => {
+                // 从远程脚本中提取版本号
+                const versionMatch = data.match(/@version\s+(\d+\.\d+)/);
+                if (versionMatch && versionMatch[1]) {
+                    const latestVersion = versionMatch[1];
+                    
+                    // 比较版本号
+                    if (compareVersions(latestVersion, currentVersion) > 0) {
+                        // 有新版本，显示更新提示
+                        showUpdateNotification(currentVersion, latestVersion, 'https://github.com/bpjanson/Vibe_Coding/blob/main/web_scripts/2-%E5%88%9B%E5%BB%BA%E8%AF%BE%E7%A8%8B%E7%8E%AF%E8%8A%82.js');
+                    }
+                }
+            })
+            .catch(error => {
+                console.warn('检查更新失败:', error);
+            });
+    }
+
+    // 版本号比较函数
+    function compareVersions(v1, v2) {
+        const parts1 = v1.split('.').map(Number);
+        const parts2 = v2.split('.').map(Number);
+        
+        for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+            const part1 = parts1[i] || 0;
+            const part2 = parts2[i] || 0;
+            
+            if (part1 > part2) return 1;
+            if (part1 < part2) return -1;
+        }
+        
+        return 0;
+    }
+
+    // 显示更新通知
+    function showUpdateNotification(currentVersion, newVersion, releaseUrl) {
+        // 创建更新提示元素
+        const updateNotice = document.createElement('div');
+        updateNotice.id = 'scriptUpdateNotice';
+        updateNotice.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            color: #856404;
+            max-width: 300px;
+        `;
+
+        updateNotice.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <strong>脚本有新版本可用</strong>
+                <button id="closeUpdateNotice" style="background: none; border: none; font-size: 18px; cursor: pointer; padding: 0; line-height: 1;">×</button>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div>当前版本: ${currentVersion}</div>
+                <div>最新版本: ${newVersion}</div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <button id="updateNowBtn" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">查看更新详情</button>
+                <button id="tmUpdateBtn" style="padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">通过Tampermonkey更新</button>
+                <button id="laterBtn" style="padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">稍后提醒</button>
+            </div>
+        `;
+
+        document.body.appendChild(updateNotice);
+
+        // 添加事件监听器
+        document.getElementById('closeUpdateNotice').addEventListener('click', function() {
+            updateNotice.remove();
+        });
+
+        document.getElementById('updateNowBtn').addEventListener('click', function() {
+            window.open(releaseUrl, '_blank');
+            updateNotice.remove();
+        });
+
+        document.getElementById('tmUpdateBtn').addEventListener('click', function() {
+            // 通过Tampermonkey更新脚本
+            const downloadUrl = 'https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/2-%E5%88%9B%E5%BB%BA%E8%AF%BE%E7%A8%8B%E7%8E%AF%E8%8A%82.js';
+            window.open(downloadUrl, '_blank');
+            updateNotice.remove();
+        });
+
+        document.getElementById('laterBtn').addEventListener('click', function() {
+            updateNotice.remove();
+        });
+    }
 
     // 等待页面加载完成
     function waitForElement(selector, callback) {
@@ -820,6 +929,8 @@
     waitForElement('body', () => {
         console.log('页面加载完成，创建快速配置按钮');
         createQuickConfigButton();
+        // 检查脚本更新
+        checkForUpdates();
     });
 
 })();

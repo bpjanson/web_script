@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         正确率查询-表格
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      3.0
 // @description  在题目列表中显示正确率,现已支持在线更新
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/*

@@ -7,10 +7,102 @@
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*
 // @grant        none
 // @icon         https://codemao.cn/favicon.ico
+// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/3-%E9%85%8D%E8%AF%BE%E6%A3%80%E6%9F%A5.js
+// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/3-%E9%85%8D%E8%AF%BE%E6%A3%80%E6%9F%A5.js
 // ==/UserScript==
 
 (function () {
     'use strict';
+
+    // 检查脚本更新
+    function checkForUpdates() {
+        const currentVersion = GM_info.script.version || '3.0';
+        const updateURL = 'https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/3-%E9%85%8D%E8%AF%BE%E6%A3%80%E6%9F%A5.js';
+
+        fetch(updateURL)
+            .then(response => response.text())
+            .then(text => {
+                // 从远程脚本中提取版本号
+                const versionMatch = text.match(/@version\s+(\d+\.\d+)/);
+                if (versionMatch && versionMatch[1]) {
+                    const latestVersion = versionMatch[1];
+                    if (compareVersions(latestVersion, currentVersion) > 0) {
+                        showUpdateNotification(currentVersion, latestVersion, updateURL);
+                    }
+                }
+            })
+            .catch(error => {
+                console.log('检查更新失败:', error);
+            });
+    }
+
+    // 版本号比较函数
+    function compareVersions(v1, v2) {
+        const parts1 = v1.split('.').map(Number);
+        const parts2 = v2.split('.').map(Number);
+        const length = Math.max(parts1.length, parts2.length);
+
+        for (let i = 0; i < length; i++) {
+            const num1 = parts1[i] || 0;
+            const num2 = parts2[i] || 0;
+
+            if (num1 > num2) return 1;
+            if (num1 < num2) return -1;
+        }
+
+        return 0;
+    }
+
+    // 显示更新通知
+    function showUpdateNotification(currentVersion, latestVersion, updateURL) {
+        // 创建更新通知容器
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 14px;
+        `;
+
+        // 创建通知内容
+        notification.innerHTML = `
+            <div style="padding: 16px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                    <h3 style="margin: 0; font-size: 16px; color: #333;">脚本有更新</h3>
+                    <button id="closeNotification" style="background: none; border: none; font-size: 20px; cursor: pointer; padding: 0; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">×</button>
+                </div>
+                <div style="margin-bottom: 16px; line-height: 1.5;">
+                    <p style="margin: 0 0 8px 0;">当前版本: <strong>v${currentVersion}</strong></p>
+                    <p style="margin: 0 0 12px 0;">最新版本: <strong style="color: #28a745;">v${latestVersion}</strong></p>
+                    <p style="margin: 0; color: #666;">有新功能和修复可用，建议及时更新。</p>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <a href="${updateURL}" target="_blank" style="flex: 1; text-align: center; padding: 8px 12px; background: #007bff; color: white; text-decoration: none; border-radius: 4px; font-size: 13px; transition: background 0.2s;">查看更新</a>
+                    <button id="updateLater" style="flex: 1; padding: 8px 12px; background: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 13px; transition: background 0.2s;">稍后提醒</button>
+                </div>
+            </div>
+        `;
+
+        // 添加到页面
+        document.body.appendChild(notification);
+
+        // 绑定关闭事件
+        notification.querySelector('#closeNotification').addEventListener('click', () => {
+            document.body.removeChild(notification);
+        });
+
+        // 绑定稍后提醒事件
+        notification.querySelector('#updateLater').addEventListener('click', () => {
+            document.body.removeChild(notification);
+        });
+    }
 
     // 检查编程步骤的配置情况
     const programmingSteps = {
@@ -1357,6 +1449,9 @@ function checkUrl(link) {
                 courseData = data;
             });
         }
+
+        // 检查脚本更新
+        setTimeout(checkForUpdates, 3000);
     }
 
     // 页面加载完成后初始化

@@ -1,17 +1,126 @@
 // ==UserScript==
 // @name         1-超级复制
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      3.0
 // @description  支持超级复制 和 同步修改课程名称
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/list*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js
 // @icon         https://codemao.cn/favicon.ico
+// @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js
+// @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js
 // ==/UserScript==
 
 (function () {
     'use strict';
+    // 获取当前脚本版本
+    const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ? 
+                          GM_info.script.version : '3.0'; // 默认版本
+    console.log('1-超级复制脚本已加载，版本: ' + currentVersion);
+
+    // 检查更新功能
+    function checkForUpdates() {
+        // 获取当前脚本版本
+        const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ? 
+                              GM_info.script.version : '3.0'; // 默认版本
+        
+        // GitHub API URL
+        const githubApiUrl = 'https://api.github.com/repos/bpjanson/Vibe_Coding/releases/latest';
+        
+        // 使用fetch检查更新
+        fetch(githubApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const latestVersion = data.tag_name.replace('v', ''); // 去除可能的'v'前缀
+                
+                // 比较版本号
+                if (compareVersions(latestVersion, currentVersion) > 0) {
+                    // 有新版本，显示更新提示
+                    showUpdateNotification(currentVersion, latestVersion, data.html_url);
+                }
+            })
+            .catch(error => {
+                console.warn('检查更新失败:', error);
+            });
+    }
+
+    // 版本号比较函数
+    function compareVersions(v1, v2) {
+        const parts1 = v1.split('.').map(Number);
+        const parts2 = v2.split('.').map(Number);
+        
+        for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
+            const part1 = parts1[i] || 0;
+            const part2 = parts2[i] || 0;
+            
+            if (part1 > part2) return 1;
+            if (part1 < part2) return -1;
+        }
+        
+        return 0;
+    }
+
+    // 显示更新通知
+    function showUpdateNotification(currentVersion, newVersion, releaseUrl) {
+        // 创建更新提示元素
+        const updateNotice = document.createElement('div');
+        updateNotice.id = 'scriptUpdateNotice';
+        updateNotice.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 10001;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            font-size: 14px;
+            color: #856404;
+            max-width: 300px;
+        `;
+
+        updateNotice.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+                <strong>脚本有新版本可用</strong>
+                <button id="closeUpdateNotice" style="background: none; border: none; font-size: 18px; cursor: pointer; padding: 0; line-height: 1;">×</button>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <div>当前版本: ${currentVersion}</div>
+                <div>最新版本: ${newVersion}</div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-direction: column;">
+                <button id="updateNowBtn" style="padding: 8px 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">查看更新详情</button>
+                <button id="tmUpdateBtn" style="padding: 8px 12px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">通过Tampermonkey更新</button>
+                <button id="laterBtn" style="padding: 8px 12px; background-color: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px;">稍后提醒</button>
+            </div>
+        `;
+
+        document.body.appendChild(updateNotice);
+
+        // 添加事件监听器
+        document.getElementById('closeUpdateNotice').addEventListener('click', function() {
+            updateNotice.remove();
+        });
+
+        document.getElementById('updateNowBtn').addEventListener('click', function() {
+            window.open(releaseUrl, '_blank');
+            updateNotice.remove();
+        });
+
+        document.getElementById('tmUpdateBtn').addEventListener('click', function() {
+            // 通过Tampermonkey更新脚本
+            const downloadUrl = 'https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js';
+            window.open(downloadUrl, '_blank');
+            updateNotice.remove();
+        });
+
+        document.getElementById('laterBtn').addEventListener('click', function() {
+            updateNotice.remove();
+        });
+    }
 
     // 等待页面加载完成
     function waitForElement(selector, callback) {
@@ -991,6 +1100,9 @@
 
     // 初始化
     function init() {
+        // 检查更新
+        checkForUpdates();
+        
         // 等待表格加载
         waitForElement('.ant-table-tbody', () => {
             console.log('课程列表表格已加载，开始添加超级复制按钮');
