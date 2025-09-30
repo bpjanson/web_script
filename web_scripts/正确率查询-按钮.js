@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         4-编程猫周测正确率查询
+// @name         4-周测正确率查询-按钮
 // @namespace    http://tampermonkey.net/
-// @version      2.2
-// @description  在猫码周测页面添加一个美化按钮，点击后在现代风格的悬浮窗中显示所有题目、整体正确率（整数）、选项正确率（整数）及正确答案。数据在页面加载时静默预加载，点击按钮即时展示。标题、关闭按钮固定，按钮悬浮右下角，内容新增试卷名称和ID，并优化复制功能以包含所有信息。
+// @version      2.4
+// @description  在周测页面添加一个美化按钮，点击后在悬浮窗中显示所有题目、整体正确率（整数）并优化复制功能。现已支持在线更新
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/group-center?paperId=*
 // @grant        GM_xmlhttpRequest
