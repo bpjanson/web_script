@@ -10,6 +10,7 @@
 // @icon         https://tyca.codemao.cn/favicon.ico
 // @updateURL    https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js
 // @downloadURL  https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js
+// @license      MIT; https://github.com/bpjanson/Vibe_Coding/LICENSE
 // ==/UserScript==
 
 (function () {
