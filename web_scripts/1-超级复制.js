@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1-超级复制
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  支持超级复制 和 同步修改课程名称
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/list*

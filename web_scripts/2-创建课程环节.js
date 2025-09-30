@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         2-快速创建课程环节
 // @namespace    http://tampermonkey.net/
-// @version      3.0
+// @version      3.1
 // @description  在课程配置页面添加快速配置按钮
 // @author       You
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*&isEdit=true
