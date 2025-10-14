@@ -25,7 +25,9 @@
 
     // 移动比例尺到左下角的函数
     function moveScaleToBottomLeft() {
-        const scaleElement = document.querySelector('div.BMap_scaleCtrl.anchorBR');
+        // 使用更通用的选择器匹配比例尺元素
+        const scaleElement = document.querySelector('div.BMap_scaleCtrl.anchorBR') ||
+            document.querySelector('div[class*="BMap_scaleCtrl"]');
 
         if (scaleElement && !scaleElement.dataset.moved) {
             // 移动到左下角
@@ -33,12 +35,38 @@
             scaleElement.style.left = '10px';
             scaleElement.style.bottom = '10px';
             scaleElement.style.right = 'auto';
+            scaleElement.style.top = 'auto';
             scaleElement.style.zIndex = '1000';
 
             // 标记已移动，避免重复执行
             scaleElement.dataset.moved = 'true';
 
-            console.log('比例尺已移动到左下角');
+            console.log(`比例尺已移动到左下角: ${scaleElement.className}`);
+        }
+    }
+
+    // 删除所有包含"-banner"的元素
+    function removeAllBannerElements() {
+        let removed = false;
+
+        // 查找所有包含"-banner"类名的元素
+        const bannerElements = document.querySelectorAll('div[class*="-banner"]');
+
+        bannerElements.forEach(element => {
+            // 检查是否是下载横幅，如果是则删除其父元素
+            if (element.classList.contains('download-banner') && element.parentElement) {
+                element.parentElement.remove();
+                console.log('已删除下载横幅及其父元素');
+                removed = true;
+            } else {
+                element.remove();
+                console.log(`已删除横幅元素: ${element.className}`);
+                removed = true;
+            }
+        });
+
+        if (removed) {
+            console.log('所有横幅元素已删除');
         }
     }
 
@@ -53,13 +81,10 @@
         // 3. 删除消息中心
         removeElement('div#message-center.has-message') || removeElement('div#message-center');
 
-        // 4. 删除路线搜索下载横幅（动态出现）
-        removeElement('div.route-search-banner.leadDownloadCard');
+        // 4. 删除所有包含"-banner"的横幅元素（动态出现）
+        removeAllBannerElements();
 
-        // 5. 删除下载横幅（动态出现）
-        removeElement('div.download-banner');
-
-        // 6. 移动比例尺到左下角
+        // 5. 移动比例尺到左下角
         moveScaleToBottomLeft();
 
         console.log('百度地图界面优化完成');
@@ -72,25 +97,6 @@
         optimizeBaiduMap();
     }
 
-    // 专门处理动态横幅元素的函数
-    function removeDynamicBanners() {
-        let removed = false;
-
-        // 删除路线搜索下载横幅
-        if (removeElement('div.route-search-banner.leadDownloadCard')) {
-            removed = true;
-        }
-
-        // 删除下载横幅
-        if (removeElement('div.download-banner')) {
-            removed = true;
-        }
-
-        if (removed) {
-            console.log('动态横幅元素已删除');
-        }
-    }
-
     // 使用MutationObserver监听DOM变化，处理动态加载的元素
     const observer = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutation) {
@@ -98,18 +104,14 @@
                 // 检查新增的节点中是否包含目标元素
                 mutation.addedNodes.forEach(function (node) {
                     if (node.nodeType === 1) { // 元素节点
-                        // 检查是否是目标横幅元素
-                        if (node.classList &&
-                            (node.classList.contains('route-search-banner') ||
-                                node.classList.contains('download-banner'))) {
-                            setTimeout(() => removeDynamicBanners(), 50);
+                        // 检查是否是包含"-banner"的横幅元素
+                        if (node.classList && node.className.includes('-banner')) {
+                            setTimeout(() => removeAllBannerElements(), 50);
                         }
 
-                        // 检查子元素中是否包含目标横幅
-                        if (node.querySelector &&
-                            (node.querySelector('div.route-search-banner.leadDownloadCard') ||
-                                node.querySelector('div.download-banner'))) {
-                            setTimeout(() => removeDynamicBanners(), 50);
+                        // 检查子元素中是否包含横幅元素
+                        if (node.querySelector && node.querySelector('div[class*="-banner"]')) {
+                            setTimeout(() => removeAllBannerElements(), 50);
                         }
                     }
                 });
@@ -135,6 +137,6 @@
     setInterval(optimizeBaiduMap, 3000);
 
     // 更频繁地检查动态横幅元素
-    setInterval(removeDynamicBanners, 1000);
+    setInterval(removeAllBannerElements, 1000);
 
 })();
