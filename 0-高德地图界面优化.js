@@ -34,29 +34,26 @@
                 return;
             }
 
-            // 获取登录框和工具栏的位置信息
+            // 获取登录框的位置信息
             const loginboxRect = loginbox.getBoundingClientRect();
             const layerboxRect = layerbox.getBoundingClientRect();
 
-            // 计算水平位置：登录框左侧减去工具栏宽度再减去间距
+            // 计算新位置：登录框左侧减去工具栏宽度再减去间距
             const newLeft = loginboxRect.left - layerboxRect.width - 30;
+
+            // 确保不会移动到屏幕外
             const finalLeft = Math.max(10, newLeft);
 
-            // 计算垂直居中位置
-            const loginboxCenter = loginboxRect.top + (loginboxRect.height / 2);
-            const layerboxCenter = layerboxRect.height / 2;
-            const centeredTop = loginboxCenter - layerboxCenter;
-
-            // 应用新位置，实现垂直居中对齐
+            // 应用新位置，保持原有尺寸
             layerbox.style.position = 'fixed';
             layerbox.style.left = finalLeft + 'px';
-            layerbox.style.top = centeredTop + 'px';
+            layerbox.style.top = loginboxRect.top + 'px';
             layerbox.style.zIndex = '1000';
 
             // 标记已调整，避免重复执行
             layerbox.dataset.adjusted = 'true';
 
-            console.log(`工具栏位置已调整为垂直居中: left=${finalLeft}px, top=${centeredTop}px`);
+            console.log(`工具栏位置已调整: left=${finalLeft}px, top=${loginboxRect.top}px`);
         }
     }
 
