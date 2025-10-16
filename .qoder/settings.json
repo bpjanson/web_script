@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "ask": [
+      "Read(!/Users/cm/Documents/Program/web_script/**)",
+      "Edit(!/Users/cm/Documents/Program/web_script/**)"
+    ],
+    "allow": [
+      "Read(/Users/cm/Documents/Program/web_script/**)",
+      "Edit(/Users/cm/Documents/Program/web_script/**)"
+    ]
+  },
+  "memoryImport": {},
+  "monitoring": {}
+}

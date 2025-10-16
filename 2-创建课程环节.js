@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @description  在课程配置页面添加快速配置按钮
-// @author       You
+// @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*&isEdit=true
 // @grant        none
 // @icon         https://tyca.codemao.cn/favicon.ico

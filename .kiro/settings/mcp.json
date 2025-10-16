@@ -4,6 +4,13 @@
       "command": "npx",
       "args": [
         "chrome-devtools-mcp@latest"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "evaluate_script",
+        "select_page",
+        "list_pages",
+        "click"
       ]
     }
   }

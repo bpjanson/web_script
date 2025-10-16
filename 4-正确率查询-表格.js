@@ -34,18 +34,8 @@
             return;
         }
 
-        // 2. 检查URL中是否只有paperId一个参数
-        // This check is very strict. If other parameters are sometimes present but the script should still run,
-        // this condition might need to be relaxed.
-        if (Array.from(urlParams.keys()).length !== 1) {
-            console.log("URL中除了paperId还有其他参数，脚本不执行。");
-            if (observer) {
-                observer.disconnect();
-                observer = null;
-            }
-            currentPaperId = null;
-            return;
-        }
+        // 2. 只要URL中包含paperId参数就可以执行，不限制其他参数的存在
+        // 移除了过于严格的参数数量检查，允许URL中存在其他参数如isView等
 
         // 3. 如果paperId没有变化，则不重复执行
         if (newPaperId === currentPaperId) {
