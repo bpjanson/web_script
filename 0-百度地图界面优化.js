@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         百度地图界面优化
 // @namespace    http://tampermonkey.net/
-// @version      3.2.0
+// @version      3.2.1
 // @description  删除百度地图页面中的版权信息、Logo、消息中心，并将比例尺移到左下角
 // @author       大生
 // @match        https://map.baidu.com/*
