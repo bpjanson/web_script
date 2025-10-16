@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1-超级复制
 // @namespace    http://tampermonkey.net/
-// @version      3.1.0
+// @version      3.2.0
 // @description  【猫厂专用】【谨慎操作】支持超级复制 和 同步修改课程名称
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/list*
@@ -15,25 +15,25 @@
 (function () {
     'use strict';
     // 获取当前脚本版本
-    const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ? 
-                          GM_info.script.version : '3.0'; // 默认版本
+    const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ?
+        GM_info.script.version : '3.0'; // 默认版本
     console.log('1-超级复制脚本已加载，版本: ' + currentVersion);
 
     // 检查更新功能
     function checkForUpdates() {
         // 获取当前脚本版本
-        const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ? 
-                              GM_info.script.version : '3.0'; // 默认版本
-        
+        const currentVersion = typeof GM_info !== 'undefined' && GM_info.script && GM_info.script.version ?
+            GM_info.script.version : '3.0'; // 默认版本
+
         // GitHub API URL
         const githubApiUrl = 'https://api.github.com/repos/bpjanson/Vibe_Coding/releases/latest';
-        
+
         // 使用fetch检查更新
         fetch(githubApiUrl)
             .then(response => response.json())
             .then(data => {
                 const latestVersion = data.tag_name.replace('v', ''); // 去除可能的'v'前缀
-                
+
                 // 比较版本号
                 if (compareVersions(latestVersion, currentVersion) > 0) {
                     // 有新版本，显示更新提示
@@ -49,15 +49,15 @@
     function compareVersions(v1, v2) {
         const parts1 = v1.split('.').map(Number);
         const parts2 = v2.split('.').map(Number);
-        
+
         for (let i = 0; i < Math.max(parts1.length, parts2.length); i++) {
             const part1 = parts1[i] || 0;
             const part2 = parts2[i] || 0;
-            
+
             if (part1 > part2) return 1;
             if (part1 < part2) return -1;
         }
-        
+
         return 0;
     }
 
@@ -101,23 +101,23 @@
         document.body.appendChild(updateNotice);
 
         // 添加事件监听器
-        document.getElementById('closeUpdateNotice').addEventListener('click', function() {
+        document.getElementById('closeUpdateNotice').addEventListener('click', function () {
             updateNotice.remove();
         });
 
-        document.getElementById('updateNowBtn').addEventListener('click', function() {
+        document.getElementById('updateNowBtn').addEventListener('click', function () {
             window.open(releaseUrl, '_blank');
             updateNotice.remove();
         });
 
-        document.getElementById('tmUpdateBtn').addEventListener('click', function() {
+        document.getElementById('tmUpdateBtn').addEventListener('click', function () {
             // 通过Tampermonkey更新脚本
             const downloadUrl = 'https://raw.githubusercontent.com/bpjanson/Vibe_Coding/main/web_scripts/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js';
             window.open(downloadUrl, '_blank');
             updateNotice.remove();
         });
 
-        document.getElementById('laterBtn').addEventListener('click', function() {
+        document.getElementById('laterBtn').addEventListener('click', function () {
             updateNotice.remove();
         });
     }
@@ -1102,7 +1102,7 @@
     function init() {
         // 检查更新
         checkForUpdates();
-        
+
         // 等待表格加载
         waitForElement('.ant-table-tbody', () => {
             console.log('课程列表表格已加载，开始添加超级复制按钮');

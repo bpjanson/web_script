@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         2-快速创建课程环节
 // @namespace    http://tampermonkey.net/
-// @version      3.1.0
+// @version      3.2.0
 // @description  【猫厂专用】【谨慎操作】在课程配置页面添加快速配置按钮
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*&isEdit=true

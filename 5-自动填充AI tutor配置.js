@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         【未完成】自动填充AI tutor配置
 // @namespace    http://tampermonkey.net/
-// @version      3.1.0
+// @version      3.2.0
 // @description  【猫厂专用】自动配置编程猫教研工作台中海龟编辑器环节的AI tutor功能（经过实际测试优化）
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info*
 // @grant        none
 // @icon         https://tyca.codemao.cn/favicon.ico
+// @downloadURL  https://github.com/bpjanson/web_script/blob/main/5-%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85AI%20tutor%E9%85%8D%E7%BD%AE.js
+// @license      MPL-2.0
 // ==/UserScript==
 
 (function() {
