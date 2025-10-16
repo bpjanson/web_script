@@ -7,7 +7,7 @@
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*
 // @grant        none
 // @icon         https://tyca.codemao.cn/favicon.ico
-// @license      MPL-2.0
+// @downloadURL  https://github.com/bpjanson/web_script/blob/main/3-%E8%AF%BE%E7%A8%8B%E9%85%8D%E7%BD%AE%E6%A3%80%E6%9F%A5.js
 // ==/UserScript==
 
 (function () {
