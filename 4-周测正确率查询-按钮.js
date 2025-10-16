@@ -8,6 +8,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setClipboard
 // @icon         https://tyca.codemao.cn/favicon.ico
+// @downloadURL  https://github.com/bpjanson/web_script/blob/main/4-%E5%91%A8%E6%B5%8B%E6%AD%A3%E7%A1%AE%E7%8E%87%E6%9F%A5%E8%AF%A2-%E6%8C%89%E9%92%AE.js
 // @license      MPL-2.0
 // ==/UserScript==
 
