@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      3.2.0
 // @description  删除百度地图页面中的版权信息、Logo、消息中心，并将比例尺移到左下角
-// @author       You
+// @author       大生
 // @match        https://map.baidu.com/*
 // @grant        none
 // @icon         https://map.baidu.com/favicon.ico

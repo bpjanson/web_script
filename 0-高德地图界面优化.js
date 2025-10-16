@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      3.2.0
 // @description  删除高德地图页面中的版权信息、APP下载提示和Logo
-// @author       You
+// @author       大生
 // @match        https://ditu.amap.com/*
 // @grant        none
 // @icon         https://www.amap.com/favicon.ico
