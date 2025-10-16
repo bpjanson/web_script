@@ -2,7 +2,7 @@
 // @name         【未完成】自动填充AI tutor配置
 // @namespace    http://tampermonkey.net/
 // @version      3.0
-// @description  自动配置编程猫教研工作台中海龟编辑器环节的AI tutor功能（经过实际测试优化）
+// @description  【猫厂专用】自动配置编程猫教研工作台中海龟编辑器环节的AI tutor功能（经过实际测试优化）
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info*
 // @grant        none

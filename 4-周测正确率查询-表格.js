@@ -2,7 +2,7 @@
 // @name         4-正确率查询-表格
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @description  在题目列表中显示正确率,现已支持在线更新
+// @description  【猫厂专用】在题目详情列表中显示正确率
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/*
 // @grant        GM_xmlhttpRequest

@@ -2,7 +2,7 @@
 // @name         4-正确率查询-按钮
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
-// @description  在周测页面添加一个美化按钮，点击后在悬浮窗中显示所有题目、整体正确率（整数）并优化复制功能。现已支持在线更新
+// @description  【猫厂专用】在周测详情页添加一个美化按钮，点击后在悬浮窗中显示所有题目、整体正确率（整数）并优化复制功能。现已支持在线更新
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/group-center?paperId=*
 // @grant        GM_xmlhttpRequest
