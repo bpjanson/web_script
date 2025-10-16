@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         1-超级复制
 // @namespace    http://tampermonkey.net/
-// @version      2.0.0
+// @version      3.1.0
 // @description  【猫厂专用】【谨慎操作】支持超级复制 和 同步修改课程名称
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/list*
 // @grant        none
 // @require      https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js
 // @icon         https://tyca.codemao.cn/favicon.ico
+// @downloadURL  https://github.com/bpjanson/web_script/blob/main/1-%E8%B6%85%E7%BA%A7%E5%A4%8D%E5%88%B6.js
 // @license      MPL-2.0
 // ==/UserScript==
 

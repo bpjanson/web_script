@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         4-正确率查询-表格
 // @namespace    http://tampermonkey.net/
-// @version      2.0.0
+// @version      3.1.0
 // @description  【猫厂专用】在题目详情列表中显示正确率
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/*

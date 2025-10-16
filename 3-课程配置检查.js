@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         3-课程配置检查
 // @namespace    http://tampermonkey.net/
-// @version      2.0.0
+// @version      3.1.0
 // @description  【猫厂专用】自动检查课程配置是否符合规范，修复了讲义链接格式检查规则
 // @author       大生
 // @match        https://tyca.codemao.cn/tanyue-course-warehouse/course/info?courseId=*
