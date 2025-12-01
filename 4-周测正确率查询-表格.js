@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         4-正确率查询-表格
 // @namespace    http://tampermonkey.net/
-// @version      3.2.0
+// @version      3.2.2
 // @description  【猫厂专用】在题目详情列表中显示正确率
 // @author       大生
 // @match        https://tyca.codemao.cn/weekly-test/*
@@ -17,6 +17,7 @@
 
     let currentPaperId = null; // 用于跟踪当前的paperId，避免重复执行
     let observer = null; // MutationObserver 实例
+    let isProcessing = false; // 防止重复处理
 
     // 定义核心逻辑函数，用于获取数据并更新UI
     function runScriptIfPaperIdExists() {
@@ -25,68 +26,94 @@
 
         // 1. 检查URL是否包含paperId
         if (!newPaperId) {
-            console.log("URL中不包含paperId参数，脚本不执行正确率显示功能。");
+            console.log("[正确率查询] URL中不包含paperId参数，脚本不执行正确率显示功能。");
             // 如果之前有paperId，现在没有了，需要清理observer
             if (observer) {
                 observer.disconnect();
                 observer = null;
             }
             currentPaperId = null; // 重置paperId
+            isProcessing = false;
             return;
         }
 
-        // 2. 只要URL中包含paperId参数就可以执行，不限制其他参数的存在
-        // 移除了过于严格的参数数量检查，允许URL中存在其他参数如isView等
-
-        // 3. 如果paperId没有变化，则不重复执行
-        if (newPaperId === currentPaperId) {
-            // console.log("paperId未改变，不重复执行脚本。");
+        // 2. 如果paperId没有变化，则不重复执行
+        if (newPaperId === currentPaperId && isProcessing) {
+            console.log("[正确率查询] paperId未改变且正在处理中，跳过");
             return;
         }
 
         currentPaperId = newPaperId; // 更新当前的paperId
-        console.log(`检测到新的paperId: ${currentPaperId}，开始执行脚本。`);
+        console.log(`[正确率查询] 检测到paperId: ${currentPaperId}，开始执行脚本`);
 
-        // 4. 如果存在旧的观察器，先断开
+        // 3. 如果存在旧的观察器，先断开
         if (observer) {
             observer.disconnect();
+            observer = null;
         }
 
         const paperInfoUrl = `https://codecamp-teaching-system.codemao.cn/paper/${currentPaperId}`;
 
-        // 5. 创建或重新创建 MutationObserver 实例
-        // 确保在表格加载后才进行操作
-        observer = new MutationObserver((mutationsList, obs) => {
+        // 定义处理表格的函数
+        function processTable() {
+            if (isProcessing) {
+                console.log("[正确率查询] 已在处理中，跳过");
+                return true; // 返回true防止重复创建observer
+            }
+
             const tableHeader = document.querySelector('.ant-table-thead');
-            if (tableHeader) {
-                // 停止观察，避免重复执行
-                obs.disconnect();
+            if (!tableHeader) {
+                return false;
+            }
 
-                // 修改表头，将“题目语音”改为“正确率”
-                const headers = tableHeader.querySelectorAll('.ant-table-cell');
-                let foundHeader = false;
-                headers.forEach(header => {
-                    if (header.textContent.includes('题目语音')) {
-                        header.textContent = '正确率';
-                        foundHeader = true;
-                    }
-                });
-
-                // 只有成功修改了表头才去获取数据，避免在非目标页面误触发
-                if (foundHeader) {
-                    fetchPaperInfo(paperInfoUrl);
-                } else {
-                    console.log("未找到预期的表格表头（题目语音），不执行数据获取。");
+            // 修改表头，将"题目语音"改为"正确率"
+            const headers = tableHeader.querySelectorAll('.ant-table-cell');
+            let foundHeader = false;
+            headers.forEach(header => {
+                if (header.textContent.includes('题目语音')) {
+                    header.textContent = '正确率';
+                    foundHeader = true;
                 }
+            });
+
+            // 只有成功修改了表头才去获取数据
+            if (foundHeader) {
+                isProcessing = true;
+                console.log("[正确率查询] 找到题目语音表头，开始获取正确率数据...");
+                fetchPaperInfo(paperInfoUrl);
+                return true;
+            } else {
+                console.log("[正确率查询] 未找到预期的表格表头（题目语音）");
+                return false;
+            }
+        }
+
+        // 4. 先尝试直接处理（如果表格已经存在）
+        if (processTable()) {
+            console.log("[正确率查询] 表格已存在，直接处理");
+            return;
+        }
+
+        // 5. 如果表格不存在，创建 MutationObserver 等待表格加载
+        console.log("[正确率查询] 表格未找到，开始观察DOM变化...");
+        observer = new MutationObserver(() => {
+            if (processTable()) {
+                // 处理成功后停止观察
+                if (observer) {
+                    observer.disconnect();
+                    observer = null;
+                }
+                console.log("[正确率查询] 通过Observer找到表格并处理完成");
             }
         });
 
-        // 6. 开始观察body元素的变化，确保表格加载
+        // 开始观察body元素的变化
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
     // 获取试卷详细信息和题目正确率的函数
     function fetchPaperInfo(url) {
+        console.log(`[正确率查询] 开始获取试卷信息: ${url}`);
         GM_xmlhttpRequest({
             method: "GET",
             url: url,
@@ -96,9 +123,10 @@
                         const paperData = JSON.parse(response.responseText);
                         if (paperData.code === 200 && paperData.success && paperData.data && paperData.data.questions) {
                             const questions = paperData.data.questions;
+                            console.log(`[正确率查询] 获取到${questions.length}个题目，开始获取正确率`);
+                            
                             const questionPromises = questions.map(question => {
                                 const questionId = question.questionId;
-                                const questionName = question.name || `题目 ${questionId}`;
                                 if (questionId) {
                                     const questionAccuracyUrl = `https://codecamp-teaching-system.codemao.cn/general-question/list?questionId=${questionId}`;
                                     return new Promise((resolve) => {
@@ -111,21 +139,22 @@
                                                         const qData = JSON.parse(qResponse.responseText);
                                                         if (qData.code === 200 && qData.success && qData.data && qData.data.items && qData.data.items.length > 0 && qData.data.items[0].stat) {
                                                             const accuracy = qData.data.items[0].stat.accuracy;
+                                                            console.log(`[正确率查询] 题目${questionId}正确率: ${(accuracy * 100).toFixed(0)}%`);
                                                             resolve({ questionId, accuracy });
                                                         } else {
                                                             resolve({ questionId, accuracy: 'N/A' });
                                                         }
                                                     } catch (e) {
-                                                        console.error(`解析题目 ${questionId} 响应失败:`, e);
+                                                        console.error(`[正确率查询] 解析题目 ${questionId} 响应失败:`, e);
                                                         resolve({ questionId, accuracy: 'N/A' });
                                                     }
                                                 } else {
-                                                    console.error(`获取题目 ${questionId} 信息失败，状态码: ${qResponse.status}`);
+                                                    console.error(`[正确率查询] 获取题目 ${questionId} 信息失败，状态码: ${qResponse.status}`);
                                                     resolve({ questionId, accuracy: 'N/A' });
                                                 }
                                             },
                                             onerror: function (error) {
-                                                console.error(`请求题目 ${questionId} 时发生错误:`, error);
+                                                console.error(`[正确率查询] 请求题目 ${questionId} 时发生错误:`, error);
                                                 resolve({ questionId, accuracy: 'N/A' });
                                             }
                                         });
@@ -136,21 +165,26 @@
                             });
 
                             Promise.all(questionPromises).then(accuracies => {
+                                console.log("[正确率查询] 所有题目正确率获取完成，开始更新表格");
                                 updateTableWithAccuracies(accuracies);
                             });
 
                         } else {
-                            console.warn("获取试卷信息成功，但数据结构不符合预期或无题目信息。");
+                            console.warn("[正确率查询] 获取试卷信息成功，但数据结构不符合预期或无题目信息");
+                            isProcessing = false;
                         }
                     } catch (e) {
-                        console.error("解析试卷信息JSON响应失败：", e);
+                        console.error("[正确率查询] 解析试卷信息JSON响应失败：", e);
+                        isProcessing = false;
                     }
                 } else {
-                    console.error(`获取试卷信息失败，状态码：${response.status}`);
+                    console.error(`[正确率查询] 获取试卷信息失败，状态码：${response.status}`);
+                    isProcessing = false;
                 }
             },
             onerror: function (error) {
-                console.error("请求试卷信息失败：", error);
+                console.error("[正确率查询] 请求试卷信息失败：", error);
+                isProcessing = false;
             }
         });
     }
@@ -161,11 +195,15 @@
 
         const tableBody = document.querySelector('.ant-table-tbody');
         if (!tableBody) {
-            console.warn("未找到表格tbody元素。");
+            console.warn("[正确率查询] 未找到表格tbody元素");
+            isProcessing = false;
             return;
         }
 
         const rows = tableBody.querySelectorAll('tr.ant-table-row');
+        console.log(`[正确率查询] 找到${rows.length}行数据，开始更新`);
+        
+        let updatedCount = 0;
         rows.forEach(row => {
             const questionId = row.dataset.rowKey;
             if (questionId) {
@@ -173,7 +211,7 @@
 
                 const cells = row.querySelectorAll('.ant-table-cell');
                 if (cells.length > 4) {
-                    const voiceCell = cells[4]; // 第5个单元格（索引从0开始），对应题目语音
+                    const voiceCell = cells[4]; // 第5个单元格（索引从0开始），对应题目语音/正确率
 
                     if (accuracy !== undefined) {
                         if (accuracy === 'N/A') {
@@ -192,6 +230,7 @@
                                 voiceCell.style.color = 'green';
                             }
                         }
+                        updatedCount++;
                     } else {
                         voiceCell.textContent = '未找到';
                         voiceCell.style.color = '#888'; // 灰色
@@ -212,38 +251,45 @@
                 }
             }
         });
+
+        console.log(`[正确率查询] 表格更新完成，共更新${updatedCount}行`);
+        isProcessing = false;
     }
 
     // --- 监听 URL 变化，确保脚本在 URL 变化时重新运行 ---
 
-    // 使用 MutationObserver 监听 URL 变化，这是一个更健壮的方法，可以捕获 address bar 改变、history API 调用等情况。
-    // 它通过观察 <title> 或其他动态元素的变化来间接判断页面内容是否已更新，
-    // 或直接监听整个<body>的变化。这里我们选择监听URL变化本身。
     let lastUrl = location.href;
     new MutationObserver(() => {
         const url = location.href;
         if (url !== lastUrl) {
             lastUrl = url;
+            isProcessing = false; // 重置处理状态
             runScriptIfPaperIdExists(); // URL 变化时，重新运行逻辑
         }
-    }).observe(document, { subtree: true, childList: true }); // 观察整个文档的变化
+    }).observe(document, { subtree: true, childList: true });
 
-    // 针对单页应用 (SPA) 路由变化的监听，以防万一 MutationObserver 无法捕获
+    // 针对单页应用 (SPA) 路由变化的监听
     const originalPushState = history.pushState;
     history.pushState = function () {
         originalPushState.apply(history, arguments);
+        isProcessing = false;
         runScriptIfPaperIdExists();
     };
 
     const originalReplaceState = history.replaceState;
     history.replaceState = function () {
         originalReplaceState.apply(history, arguments);
+        isProcessing = false;
         runScriptIfPaperIdExists();
     };
 
-    window.addEventListener('popstate', runScriptIfPaperIdExists); // 浏览器前进/后退按钮
+    window.addEventListener('popstate', () => {
+        isProcessing = false;
+        runScriptIfPaperIdExists();
+    });
 
     // 首次加载页面时执行脚本
+    console.log("[正确率查询] 脚本已加载，开始初始化");
     runScriptIfPaperIdExists();
 
 })();
