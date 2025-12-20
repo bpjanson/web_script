@@ -8,7 +8,7 @@
 // @match        https://gobricks.cn/parts*
 // @grant        none
 // @icon         https://gobricks.cn/favicon.ico
-//@license       MIT
+// @license      MIT
 // @downloadURL  https://github.com/bpjanson/web_script/blob/main/6-%E9%AB%98%E7%A0%96%E7%A7%AF%E6%9C%A8%E6%B8%85%E5%8D%95%E6%8F%90%E5%8F%96.js
 // ==/UserScript==
 
