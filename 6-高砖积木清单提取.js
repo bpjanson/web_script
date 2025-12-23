@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         高砖积木清单提取
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  以Materia Design 3风格，提取高砖网站可购零件数据，显示在悬浮弹窗中
 // @author       大生
 // @match        https://gobricks.cn/batch*
