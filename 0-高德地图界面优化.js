@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         高德地图界面优化
 // @namespace    http://tampermonkey.net/
-// @version      3.2.0
+// @version      3.3.0
 // @description  删除高德地图页面中的版权信息、APP下载提示和Logo
 // @author       大生
-// @match        https://ditu.amap.com/*
+// @match        https://gaode.com/*
 // @grant        none
-// @icon         https://www.amap.com/favicon.ico
+// @icon         https://www.gaode.com/favicon.ico
 // @downloadURL  https://github.com/bpjanson/web_script/blob/main/0-%E9%AB%98%E5%BE%B7%E5%9C%B0%E5%9B%BE%E7%95%8C%E9%9D%A2%E4%BC%98%E5%8C%96.js
 // @license      MPL-2.0
 // ==/UserScript==
