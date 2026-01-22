@@ -1,0 +1,31 @@
+﻿BLItemNo,ElementId,LdrawId,PartName,BLColorId,LDrawColorId,ColorName,ColorCategory,Qty,Weight,,Gobrick Part,Gobrick Color
+15100,6282148,15100,"Technic, Pin with Friction Ridges and Pin Hole",1,'15,White,Solid Colors,2,0.4,,GDS-925,'090
+15462,,15462,"Technic, Axle  5L with Stop",86,'71,Light Bluish Gray,Solid Colors,2,0.73,,GDS-908,'071
+24119,6246996,24119,"Technic, Panel Curved 7 x 3 with 2 Pin Holes through Panel Surface",1,'15,White,Solid Colors,1,4.15,,GDS-1011,'090
+24119,6150082,24119,"Technic, Panel Curved 7 x 3 with 2 Pin Holes through Panel Surface",11,'0,Black,Solid Colors,1,4.15,,GDS-1011,'080
+32054,6321747,32054,"Technic, Pin 3L with Friction Ridges and Stop Bush",86,'71,Light Bluish Gray,Solid Colors,2,0.33,,GDS-923,'071
+4265c,4278910,32123a,Technic Bush 1/2 Smooth,11,'0,Black,Solid Colors,4,0.1,,GDS-616,'080
+32269,6346535,32269,"Technic, Gear 20 Tooth Double Bevel",11,'0,Black,Solid Colors,2,1.4,,GDS-1103,'080
+32348,6278125,32348,"Technic, Liftarm, Modified Bent Thick 1 x 7 (4 - 4)",11,'0,Black,Solid Colors,2,2.0,,GDS-673,'080
+32498,,32498,"Technic, Gear 36 Tooth Double Bevel",1,'15,White,Solid Colors,2,3.5,,GDS-1110,'090
+32524,4495927,32524,"Technic, Liftarm Thick 1 x 7",1,'15,White,Solid Colors,1,1.74,,GDS-665,'090
+32526,4585040,32526,"Technic, Liftarm, Modified Bent Thick L-Shape 3 x 5",1,'15,White,Solid Colors,2,1.77,,GDS-675,'090
+3705,370526,3705,"Technic, Axle  4L",11,'0,Black,Solid Colors,2,0.6,,GDS-578,'080
+41239,4522933,41239,"Technic, Liftarm Thick 1 x 13",11,'0,Black,Solid Colors,2,3.3,,GDS-667,'080
+43093,,43093,"Technic, Axle  1L with Pin with Friction Ridges",86,'71,Light Bluish Gray,Solid Colors,10,0.26,,GDS-913,'071
+44309,4184286,44309,Tire 43.2 x 22 ZR,11,'0,Black,Solid Colors,2,11.15,,GDS-1234,'080
+56145,4297210,56145,Wheel 30.4mm D. x 20mm with No Pin Holes and Reinforced Rim,86,'71,Light Bluish Gray,Solid Colors,2,4.25,,GDS-1231,'071
+64179,6016156,64179,"Technic, Liftarm, Modified Frame Thick 5 x 7 Open Center",1,'15,White,Solid Colors,1,0,,GDS-972,'090
+64391,4541325,64391,"Technic, Panel Fairing # 4 Small Smooth Long, Side B",11,'0,Black,Solid Colors,1,3.2,,GDS-1016,'080
+64683,4541924,64683,"Technic, Panel Fairing # 3 Small Smooth Long, Side A",11,'0,Black,Solid Colors,1,3.2,,GDS-1017,'080
+6558,6299413,6558,"Technic, Pin 3L with Friction Ridges",7,'1,Blue,Solid Colors,2,0.31,,GDS-888,'050
+6558,,6558,"Technic, Pin 3L with Friction Ridges",86,'71,Light Bluish Gray,Solid Colors,2,0.37,,GDS-888,'071
+6629,6279881,6629,"Technic, Liftarm, Modified Bent Thick 1 x 9 (6 - 4)",11,'0,Black,Solid Colors,4,2.6,,GDS-672,'080
+87082,6321303,87082,"Technic, Pin 3L with Friction Ridges and Center Pin Hole",86,'71,Light Bluish Gray,Solid Colors,2,0.5,,GDS-959,'071
+92911,,92911,"Technic, Steering Ball Joint Large Receptacle",86,'71,Light Bluish Gray,Solid Colors,2,3.5,,GDS-1540,'071
+2780,6279875,2780,"Technic, Pin with Short Friction Ridges",11,'0,Black,Solid Colors,20,0.16,,GDS-889,无
+14149,,14149,"Technic, Link Tread Attachment, Double, Rubber",11,'0,Black,Solid Colors,2,0.52,,GDS-无,无
+95292c01,,95292-f1,"Technic, Shock Absorber 9.5L (Extra Hard Spring)",11,'0,Black,Solid Colors,2,3.4,,GDS-无,无
+99948,,99948,Technic Ball Steel 18mm D.,67,'80,Metallic Silver,Metallic Colors,2,24.3,,GDS-无,无
+,,gaizi,??,,'0,Black,Solid Colors,1,,,GDS-无,无
+,,ke,?,,'0,Black,Solid Colors,1,,,GDS-无,无

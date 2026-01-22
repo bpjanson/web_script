@@ -10,7 +10,16 @@
         "evaluate_script",
         "select_page",
         "list_pages",
-        "click"
+        "click",
+        "new_page",
+        "take_snapshot",
+        "list_network_requests",
+        "get_network_request",
+        "navigate_page",
+        "wait_for",
+        "take_screenshot",
+        "list_console_messages",
+        "get_console_message"
       ]
     }
   }
