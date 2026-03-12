@@ -1,9 +1,10 @@
 // ==UserScript==
-// @name         海龟编辑器自定义输入界面
+// @name         海龟编辑器修改录屏界面
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.5
 // @description  自动配置侧边栏按钮、任务栏可见性及虚拟键盘快捷输入
 // @author       大生
+// @icon         https://turtle.codemao.cn/favicon.ico
 // @match        https://test-lunar-turtle.codemao.cn/?entry=luanr&sidebar=true
 // @grant        none
 // ==/UserScript==
@@ -69,12 +70,12 @@
                     {
                         id: 'button_exit',
                         title: 'button_exit',
-                        icon: 'https://online-education.codemao.cn/444/1748259097856ic_python_more.png'
+                        icon: 'https://online-education.codemao.cn/444/1728447903545ic_more.png'
                     },
                     {
                         id: 'button_complete',
                         title: 'button_complete',
-                        icon: 'https://online-education.codemao.cn/444/1748259098983ic_python_submit.png'
+                        icon: 'https://online-education.codemao.cn/444/1728447902270ic_complete.png'
                     },
                     {
                         id: 'button_view_back',
@@ -96,7 +97,7 @@
                 "syntax": [],
                 "func": [],
                 "text": [
-                    "\"平静\"", "\"开心\"", "\"热情跳舞\"", "\"恶搞\"", "\"耍酷\"",
+                    "\"平静\"", "\"开心\"", "\"热情舞蹈\"", "\"恶搞\"", "\"耍酷\"",
                     "\"悠闲\"", "\"喜欢\"", "\"吃惊\"", "\"唱歌\"", "\"摇滚\"",
                     "\"冲刺\"", "\"舞狮\"", "\"街舞\"", "\"漂移\"", "\"打篮球\"",
                     "\"放学啦\"", "\"吃烤串\"", "\"太辣了\"", "\"害怕\"", "\"生气\"", "\"伤心\""
@@ -115,48 +116,4 @@
             console.error('❌ 应用配置时出错:', e);
         }
     }
-
-    function createNewFile(fileName = 'new_file.py') {
-        // --- 步骤 1: 找到并点击 "新建文件" 按钮 ---
-        const allActionButtons = document.querySelectorAll('div.ant-space-item');
-        if (allActionButtons.length < 2) {
-            console.error('未能找到操作按钮容器。');
-            return;
-        }
-        const newFileButtonContainer = allActionButtons[1];
-        const newFileButton = newFileButtonContainer.querySelector('span');
-
-        if (newFileButton) {
-            newFileButton.click();
-            console.log('已点击 "新建文件" 按钮。');
-
-            // --- 步骤 2: 等待对话框出现并执行后续操作 ---
-            setTimeout(() => {
-                // --- 步骤 3 & 4: 找到输入框，清空并填入新文件名 ---
-                const fileNameInput = document.querySelector('.AsyncPrompt_text__36bTj');
-                if (!fileNameInput) {
-                    console.error('未能找到文件名输入框。');
-                    return;
-                }
-                fileNameInput.value = fileName; // 清空并设置新值
-                console.log(`已将文件名设置为: ${fileName}`);
-
-
-                // --- 步骤 5 & 6: 找到并点击 "确认" 按钮 ---
-                const confirmButton = document.querySelector('.AsyncPrompt_confirm__3Qe2j');
-                if (confirmButton) {
-                    confirmButton.click();
-                    console.log('已点击 "确认" 按钮，文件创建成功！');
-                } else {
-                    console.error('未能找到 "确认" 按钮。');
-                }
-            }, 500); // 500毫秒的延迟
-
-        } else {
-            console.error('未能找到 "新建文件" 按钮的内部span。');
-        }
-    }
-
-    // 将函数暴露到全局，方便在控制台调试
-    window.createNewFile = createNewFile;
 })();
