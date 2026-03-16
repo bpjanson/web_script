@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         海龟编辑器修改录屏界面
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  自动配置侧边栏按钮、任务栏可见性及虚拟键盘快捷输入
 // @author       大生
-// @icon         https://turtle.codemao.cn/favicon.ico
+// @icon         https://codemao.cn/favicon.ico
 // @match        https://test-lunar-turtle.codemao.cn/?entry=luanr&sidebar=true
 // @grant        none
 // ==/UserScript==
@@ -44,19 +44,19 @@
             vConsole.remove();
             console.log('✅ 已移除 vConsole');
         }
-        
+
         // 考虑到这些元素可能是动态加载的，使用 MutationObserver 持续监测
         const observer = new MutationObserver(() => {
             const t = document.querySelector('.LunarToolbar_wrapper__TAeLv.LunarToolbar_light__3-Ipo.absolute-right-for-wx-capsule');
             if (t) t.remove();
-            
+
             const d = document.querySelector('.ControlDrawer_trigger__5olkP.ControlDrawer_small__1xtcA.absolute-top-for-wx-capsule.drawer-small-trigger');
             if (d) d.remove();
-            
+
             const v = document.getElementById('__vconsole');
             if (v) v.remove();
         });
-        
+
         observer.observe(document.body, { childList: true, subtree: true });
     }
 
@@ -80,7 +80,7 @@
                     {
                         id: 'button_view_back',
                         title: 'button_view_back',
-                        icon: 'https://online-education.codemao.cn/444/1748259098684ic_python_play.png'
+                        icon: 'https://online-education.codemao.cn/444/1728447903807ic_play.png'
                     }
                 ]
             });
@@ -106,7 +106,7 @@
                 "isNewKeyboard": true,
                 "funcParamConfigList": {}
             };
-            
+
             _dsbridge_api.setConfigurations({
                 virtualKeyboardPresetWord: JSON.stringify(word)
             });
