@@ -7,7 +7,7 @@
 // @icon         https://codemao.cn/favicon.ico
 // @match        https://test-lunar-turtle.codemao.cn/?entry=luanr&sidebar=true
 // @grant        none
-// ==/UserScript==
+// ==/UserScript== 
 
 (function() {
     'use strict';
