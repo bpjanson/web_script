@@ -5,7 +5,7 @@
 // @description  定制海龟编辑器录屏界面：上传JSON快捷输入、移除多余UI元素
 // @author       大生
 // @icon         https://codemao.cn/favicon.ico
-// @match        https://test-lunar-turtle.codemao.cn/?entry=luanr&sidebar=true
+// @match        https://test-luar-turtle.codemao.cn/?entry=luanr&sidebar=true
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
