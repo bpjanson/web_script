@@ -19,3 +19,6 @@ Thumbs.db
 # 编辑器备份文件
 *~
 *.bak
+
+# Local tool state
+.superpowers/
